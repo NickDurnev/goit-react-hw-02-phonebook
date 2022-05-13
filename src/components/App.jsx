@@ -7,7 +7,7 @@ import ContactList from './ContactList';
 import Filter from './Filter';
 import AgreementModal from './AgreementModal';
 import { Container } from './App.styled';
-import { light, dark } from '../themes';
+import { light } from '../themes';
 import Button from './Button';
 
 const timeout = parseInt(light.animationDuration);
