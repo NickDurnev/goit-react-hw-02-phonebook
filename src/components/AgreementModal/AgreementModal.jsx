@@ -1,33 +1,25 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { createPortal } from 'react-dom';
+import { Modal, Backdrop } from './AgreementModal.styled';
+
+const modalRoot = document.querySelector('#modal-root');
 
 class AgreementModal extends Component {
-  handleConfirm = () => {
-    this.props.onClick(true);
-  };
-
-  handleReject = () => {
-    this.props.onClick(false);
-  };
-
   render() {
-    return (
-      <div>
-        <p>{this.props.text}</p>
-        <button type="button" onClick={this.handleReject}>
-          No
-        </button>
-        <button type="button" onClick={this.handleConfirm}>
-          Yes
-        </button>
-      </div>
+    const { id, children } = this.props;
+    return createPortal(
+      <Backdrop id={id}>
+        <Modal>{children}</Modal>
+      </Backdrop>,
+      modalRoot
     );
   }
 }
 
 AgreementModal.propTypes = {
-  text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default AgreementModal;

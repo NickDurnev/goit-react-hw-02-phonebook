@@ -1,13 +1,16 @@
 import { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ThemeProvider } from 'styled-components';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
 import AgreementModal from './AgreementModal';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ThemeProvider } from 'styled-components';
+import { Container } from './App.styled';
 import { light, dark } from '../themes';
+import Button from './Button';
 
+const timeout = parseInt(light.animationDuration);
 let deleteContactID = null;
 
 export class App extends Component {
@@ -47,10 +50,13 @@ export class App extends Component {
   };
 
   checkAgreement = answear => {
+    document.querySelector('#modal-1').classList.add('hidden');
     if (answear === true) {
       this.deleteContact(deleteContactID);
     }
-    this.setState({ isModalOpen: false });
+    setTimeout(() => {
+      this.setState({ isModalOpen: false });
+    }, timeout);
   };
 
   openModalAgreement = id => {
@@ -59,18 +65,20 @@ export class App extends Component {
   };
 
   deleteContact = id => {
-    console.log(deleteContactID);
     const remainingContacts = this.state.contacts.filter(
       contact => contact.id !== id
     );
-    this.setState({ contacts: [...remainingContacts] });
+    document.querySelector(`#${id}`).classList.add('hidden');
+    setTimeout(() => {
+      this.setState({ contacts: [...remainingContacts] });
+    }, timeout * 2);
   };
 
   render() {
     const { contacts, isModalOpen } = this.state;
     return (
       <ThemeProvider theme={light}>
-        <div>
+        <Container>
           <h1>Phonebook</h1>
           <ContactForm onSubmit={contact => this.addContact(contact)} />
 
@@ -83,13 +91,24 @@ export class App extends Component {
             />
           )}
           {isModalOpen && (
-            <AgreementModal
-              text={'Do you really want delete this contact'}
-              onClick={value => this.checkAgreement(value)}
-            />
+            <AgreementModal id={'modal-1'}>
+              <p>Do you really want delete this contact</p>
+              <Button
+                onClick={() => this.checkAgreement(false)}
+                padding={'5px 15px'}
+              >
+                No
+              </Button>
+              <Button
+                onClick={() => this.checkAgreement(true)}
+                padding={'5px 15px'}
+              >
+                Yes
+              </Button>
+            </AgreementModal>
           )}
           <ToastContainer autoClose={3000} />
-        </div>
+        </Container>
       </ThemeProvider>
     );
   }

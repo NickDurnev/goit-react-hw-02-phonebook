@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types';
+import { List } from './ContactList.styled';
+import Button from 'components/Button';
+import { FaUserAlt } from 'react-icons/fa';
 
 const ContactList = ({ filterItems, onClick }) => (
-  <ul>
-    {filterItems.map(item => (
-      <li key={item.id} id={item.id}>
-        {item.name}:{item.number}
-        <button type="button" onClick={e => onClick(e.target.parentNode.id)}>
-          Delete
-        </button>
+  <List>
+    {filterItems.map(({ id, name, number }) => (
+      <li key={id} id={id}>
+        <FaUserAlt />
+        {name}:<span>{number}</span>
+        <Button onClick={e => onClick(e.target.parentNode.id)}>Delete</Button>
       </li>
     ))}
-  </ul>
+  </List>
 );
 
 ContactList.propTypes = {

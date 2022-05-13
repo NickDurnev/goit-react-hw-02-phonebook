@@ -1,12 +1,25 @@
+const base = {
+  mainTextFontWeight: '500',
+  listItemBcgColor: 'rgba(157, 153, 153, 0.253)',
+  backdropColor: 'rgba(0, 0, 0, 0.2)',
+  hoverTransition: '300ms',
+  hoverTimeFunction: 'linear',
+  animationDuration: '500ms',
+  animationTimeFunction: `linear`,
+};
+
 export const light = {
+  ...base,
   bgColor: '#fff',
   textColor: '#000',
-  bgButtonColor: '#60D0CA',
-  buttonColor: '#fff',
-  bgButtonHoverColor: '#941BF2',
+  bgElementColor: '#60D0CA',
+  elementColor: '#fff',
+  bgElementHoverColor: '#941BF2',
+  boxShadow: ' 0px 5px 10px 2px rgba(34, 60, 80, 0.2)',
 };
 
 export const dark = {
-  bgColor: '#000',
+  ...light,
+  bgColor: '#2D2831',
   textColor: '#fff',
 };
