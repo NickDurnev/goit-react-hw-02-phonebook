@@ -9,7 +9,7 @@ const ContactList = ({ filterItems, onClick }) => (
       <li key={id} id={id}>
         <FaUserAlt />
         {name}:<span>{number}</span>
-        <Button onClick={e => onClick(e.target.parentNode.id)}>Delete</Button>
+        <Button onClick={() => onClick(id)}>Delete</Button>
       </li>
     ))}
   </List>
@@ -23,7 +23,7 @@ ContactList.propTypes = {
       number: PropTypes.string.isRequired,
     })
   ),
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ContactList;

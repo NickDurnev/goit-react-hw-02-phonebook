@@ -27,8 +27,8 @@ export class App extends Component {
 
   addContact = value => {
     const { contacts } = this.state;
-    const names = contacts.map(contact => contact.name);
-    if (names.includes(value.name)) {
+    const names = contacts.map(contact => contact.name.toLowerCase());
+    if (names.includes(value.name.toLowerCase())) {
       toast.error(`${value.name} is already in contacts`);
       return;
     }
@@ -51,7 +51,7 @@ export class App extends Component {
 
   checkAgreement = answear => {
     document.querySelector('#modal-1').classList.add('hidden');
-    if (answear === true) {
+    if (answear) {
       this.deleteContact(deleteContactID);
     }
     setTimeout(() => {
@@ -75,7 +75,7 @@ export class App extends Component {
   };
 
   render() {
-    const { contacts, isModalOpen } = this.state;
+    const { contacts, isModalOpen, filter } = this.state;
     return (
       <ThemeProvider theme={light}>
         <Container>
@@ -83,7 +83,10 @@ export class App extends Component {
           <ContactForm onSubmit={contact => this.addContact(contact)} />
 
           <h2>Contacts</h2>
-          <Filter onChange={value => this.addFilterKey(value)} />
+          <Filter
+            onChange={value => this.addFilterKey(value)}
+            filter={filter}
+          />
           {contacts.length > 0 && (
             <ContactList
               filterItems={this.filterContacts()}
@@ -92,7 +95,7 @@ export class App extends Component {
           )}
           {isModalOpen && (
             <AgreementModal id={'modal-1'}>
-              <p>Do you really want delete this contact</p>
+              <p>Do you really want delete this contact?</p>
               <Button
                 onClick={() => this.checkAgreement(false)}
                 padding={'5px 15px'}

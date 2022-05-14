@@ -55,6 +55,7 @@ export const Modal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  min-width: 300px;
   padding: 10px;
   border-radius: 5px;
   text-align: center;
